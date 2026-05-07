@@ -36,4 +36,26 @@ class BukuController extends Controller
 
         return redirect()->route('Buku.index')->with('success', 'Data buku berhasil ditambahkan.');
     }
+
+    public function edit($id)
+    {
+        $buku = Buku::findOrFail($id);
+
+        return view('Buku.edit', compact('buku'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $buku = Buku::findOrFail($id);
+
+        $buku->update([
+            'judul' => $request->judul,
+            'penulis' => $request->penulis,
+            'penerbit' => $request->penerbit,
+            'tahun_terbit' => $request->tahun_terbit,
+            'genre' => $request->genre,
+        ]);
+
+        return redirect('/')->with('success', 'Data berhasil diupdate');
+    }
 }
